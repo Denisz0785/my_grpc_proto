@@ -3,7 +3,7 @@ version: "3"
 tasks:
   generate:
     aliases: [gen]
-    desc: "Generate code using buf"
+    desc: "Generate code using buf utilities"
     cmds:
       - mkdir -p gen/go
       - buf generate
