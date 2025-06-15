@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package api.salary;
+
+import "protobuf/api/salary/messages.proto";
+
+option go_package = "my_grpc/pkg/protobuf/api/salary;salary";
+
+service SalaryService {
+  rpc GetSalary(GetSalaryRequest) returns (GetSalaryResponse);
+  }

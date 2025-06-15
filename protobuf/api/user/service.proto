@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package api.user;
+
+import "protobuf/api/user/message.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "my_grpc/pkg/api/user;user";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Let's Go gRPC!"
+    description: "Learning gRPC"
+    version: "0.1.0"
+    contact: {
+      name: "Denis Z"
+      url: ""
+      email: "d@gmail.com"
+    }
+    license: {
+      name: "BSD 3-Clause License"
+      url: "https://opensource.org/license/bsd-3-clause"
+    }
+  }
+  external_docs: {
+    url: ""
+    description: "Больше примеров"
+  }
+  schemes: HTTP
+  schemes: HTTPS
+  consumes: "application/json"
+  produces: "application/json"
+  tags: {
+    name: "UserService"
+    description: "first gRPC service"
+  }
+};
+
+service UserService {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_tag) = {
+    name: "UserService"
+    description: "Наш крутой REST API сервис"
+    external_docs: {
+      url: ""
+      description: "Больше примеров"
+    }
+  };
+
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse){
+    option (google.api.http) = {
+      post: "/v1/user"
+      body: "*"        // JSON‑тело мапится на CreateUserRequest
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "CreateUser"
+      description: "Create new u"
+      tags: "user"
+    };
+  }
+}

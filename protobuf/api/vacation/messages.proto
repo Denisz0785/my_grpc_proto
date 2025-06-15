@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package api.vacation;
+
+option go_package = "my_grpc/pkg/api/vacation;vacation";
+
+message GetVacationRequest {
+  string name = 1;
+  int32 countDays = 2;
+}
+
+message GetVacationResponse {
+  string approve = 1;
+}

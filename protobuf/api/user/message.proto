@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package api.user;
+
+import "google/api/field_behavior.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "my_grpc/pkg/api/user;user";
+
+message CreateUserRequest {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "CreateUserRequest"
+      description: "Create new user"
+      required: [
+        "name"
+      ]
+    }
+    external_docs: {
+      url: "https://github.com/grpc-ecosystem/grpc-gateway"
+      description: "Find out more"
+    }
+    example: "{\"name\": \"Denis\", \"age\": 30}"
+  };
+
+  string name = 1[
+    json_name = "name",
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      title: "name"
+      description: "name of the user"
+      required: "true"
+      format: "string"
+      pattern: "^[a-zA-Z0-9]{1, 512}$"
+      example: "\"Denis\""
+    }
+  ];
+
+  int32 age = 2[
+    json_name = "age",
+    (google.api.field_behavior) = OPTIONAL,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      title: "age"
+      description: "age of the user"
+      required: "false"
+      format: "integer"
+      pattern: "^[0-9]$"
+      example: "123"
+    }
+  ];
+}
+
+message CreateUserResponse {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "CreateUserResponse"
+      description: "CreateUser response message"
+      required: [
+        "greeting"
+      ]
+    }
+    external_docs: {
+      url: "https://github.com/grpc-ecosystem/grpc-gateway"
+      description: "Find out more about ABitOfEverything"
+    }
+    example: "{\"result_message\": \"hello\"}"
+  };
+
+  string greeting = 1[
+    json_name = "greeting",
+    (google.api.field_behavior) = REQUIRED,
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      title: "greeting"
+      description: "greeting of the user"
+      required: "true"
+      format: "string"
+      pattern: "^[a-zA-Z0-9]{1, 512}$"
+      example: "\"User Denis created\""
+    }
+  ];
+}

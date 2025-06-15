@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api.salary;
+
+option go_package = "my_grpc/pkg/protobuf/api/salary;salary";
+
+message GetSalaryRequest {
+  string nameEmployee = 1;
+  int32 hours = 2;
+}
+
+message GetSalaryResponse {
+  int32 salary = 1;
+  string name =2;
+}

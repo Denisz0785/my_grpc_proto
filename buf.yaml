@@ -1,0 +1,31 @@
+version: v2
+name: buf.build/storm/my_grpc_proto
+#deps:
+#  - googleapis
+#  - grpc-gateway
+lint:
+  use:
+    - STANDARD
+    - COMMENTS
+    - FILE_LOWER_SNAKE_CASE
+breaking:
+  use:
+    - FILE
+    - PACKAGE
+    - WIRE_JSON
+    - ENUM_NO_DELETE
+    - ENUM_SAME_JSON_FORMAT
+    - ENUM_SAME_TYPE
+    - ENUM_VALUE_NO_DELETE
+    - ENUM_VALUE_NO_DELETE_UNLESS_NAME_RESERVED
+    - ENUM_VALUE_NO_DELETE_UNLESS_NUMBER_RESERVED
+    - ENUM_VALUE_SAME_NAME
+    - EXTENSION_MESSAGE_NO_DELETE
+    - EXTENSION_NO_DELETE
+    - FIELD_NO_DELETE
+# Dependency management by BSR: https://buf.build/docs/bsr/module/dependency-management#how-the-bsr-protects-your-dependencies
+# Need VPN
+# deps:
+# - buf.build/googleapis/googleapis
+# - buf.build/grpc-ecosystem/grpc-gateway
+# - buf.build/bufbuild/protovalidate:v0.6.3 # пример с версией
