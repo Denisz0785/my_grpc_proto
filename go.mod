@@ -1,4 +1,4 @@
-module my_grpc_proto
+module github.com/Denisz0785/my_grpc_proto
 
 go 1.24.1
 
