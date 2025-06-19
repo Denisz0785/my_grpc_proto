@@ -4,6 +4,8 @@ package api.user;
 
 import "google/api/field_behavior.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "validate/validate.proto";
+
 
 option go_package = "my_grpc/pkg/api/user;user";
 
@@ -26,6 +28,13 @@ message CreateUserRequest {
   string name = 1[
     json_name = "name",
     (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field) = {
+      string: {
+        min_len: 1,
+        max_len: 20,
+        pattern: "^[a-zA-Z0-9]+$"
+      }
+    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       title: "name"
       description: "name of the user"
@@ -39,6 +48,11 @@ message CreateUserRequest {
   int32 age = 2[
     json_name = "age",
     (google.api.field_behavior) = OPTIONAL,
+    (buf.validate.field) = {
+      int32: {
+        lte: 150
+      }
+    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       title: "age"
       description: "age of the user"
