@@ -57,9 +57,27 @@ func (m *CreateUserRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Name
+	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 20 {
+		err := CreateUserRequestValidationError{
+			field:  "Name",
+			reason: "value length must be between 1 and 20 runes, inclusive",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for Age
+	if m.GetAge() > 150 {
+		err := CreateUserRequestValidationError{
+			field:  "Age",
+			reason: "value must be less than or equal to 150",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return CreateUserRequestMultiError(errors)

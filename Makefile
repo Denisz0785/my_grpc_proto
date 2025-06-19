@@ -22,8 +22,7 @@ VENDOR_PROTO := $(CURDIR)/vendor.protobuf
 
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-	go install github.com/envoyproxy/protoc-gen-validate@v1.2.1
-
+	go install github.com/envoyproxy/protoc-gen-validate@latest
 
 # генерация .go файлов с помощью protoc
 .protoc-generate:
@@ -32,7 +31,7 @@ VENDOR_PROTO := $(CURDIR)/vendor.protobuf
 	mkdir -p $(PROTO_OUT)
 	$(PROTOC) -I=$(CURDIR) \
 	-I=$(CURDIR)/vendor.protobuf \
-	-I=$(CURDIR)/vendor.protobuf/protovalidate/proto/protovalidate/buf \
+	-I=$(CURDIR)/vendor.protobuf/envoyproxy-validate \
  	  --proto_path=$(PROTO_OUT) \
 	  --go_out=$(PROTO_OUT) --go_opt paths=source_relative \
 	  --go-grpc_out=$(PROTO_OUT) --go-grpc_opt paths=source_relative \
