@@ -33,6 +33,7 @@ VENDOR_PROTO := $(CURDIR)/vendor.protobuf
  	  --proto_path=$(PROTO_OUT) \
 	  --go_out=$(PROTO_OUT) --go_opt paths=source_relative \
 	  --go-grpc_out=$(PROTO_OUT) --go-grpc_opt paths=source_relative \
+	  --grpc-gateway_out=$(PROTO_OUT) --grpc-gateway_opt paths=source_relative \
 	  $(PROTO_SRC)/salary/messages.proto \
 	  $(PROTO_SRC)/salary/service.proto \
 	  $(PROTO_SRC)/user/message.proto \
