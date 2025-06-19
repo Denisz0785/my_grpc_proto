@@ -124,10 +124,10 @@ var File_protobuf_api_user_message_proto protoreflect.FileDescriptor
 
 const file_protobuf_api_user_message_proto_rawDesc = "" +
 	"\n" +
-	"\x1fprotobuf/api/user/message.proto\x12\bapi.user\x1a\x1fgoogle/api/field_behavior.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\"\xed\x02\n" +
+	"\x1fprotobuf/api/user/message.proto\x12\bapi.user\x1a\x1fgoogle/api/field_behavior.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x17validate/validate.proto\"\xef\x02\n" +
 	"\x11CreateUserRequest\x12l\n" +
-	"\x04name\x18\x01 \x01(\tBX\x92AI*\x04name2\x10name of the userJ\a\"Denis\"\x8a\x01\x15^[a-zA-Z0-9]{1, 512}$\xd2\x01\x04true\xa2\x02\x06string\xe0A\x02\xfaB\x06r\x04\x10\x01\x18\x14R\x04name\x12W\n" +
-	"\x03age\x18\x02 \x01(\x05BE\x92A7*\x03age2\x0fage of the userJ\x03123\x8a\x01\a^[0-9]$\xd2\x01\x05false\xa2\x02\ainteger\xe0A\x01\xfaB\x05\x1a\x03\x18\x96\x01R\x03age:\x90\x01\x92A\x8c\x01\n" +
+	"\x04name\x18\x01 \x01(\tBX\x92AI*\x04name2\x10name of the userJ\a\"Denis\"\x8a\x01\x15^[a-zA-Z0-9]{1, 512}$\xd2\x01\x04true\xa2\x02\x06string\xe0A\x02\xfaB\x06r\x04\x10\x01\x18\x14R\x04name\x12Y\n" +
+	"\x03age\x18\x02 \x01(\x05BG\x92A7*\x03age2\x0fage of the userJ\x03123\x8a\x01\a^[0-9]$\xd2\x01\x05false\xa2\x02\ainteger\xe0A\x01\xfaB\a\x1a\x05\x18\x96\x01(\x01R\x03age:\x90\x01\x92A\x8c\x01\n" +
 	"+*\x11CreateUserRequest2\x0fCreate new user\xd2\x01\x04name*?\n" +
 	"\rFind out more\x12.https://github.com/grpc-ecosystem/grpc-gateway2\x1c{\"name\": \"Denis\", \"age\": 30}\"\xd1\x02\n" +
 	"\x12CreateUserResponse\x12\x80\x01\n" +

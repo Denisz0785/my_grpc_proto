@@ -45,7 +45,10 @@ message CreateUserRequest {
   int32 age = 2[
     json_name = "age",
     (google.api.field_behavior) = OPTIONAL,
-    (validate.rules).int32 = {lte: 150},
+    (validate.rules).int32 = {
+      gte: 1,
+      lte: 150
+    },
     (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
       title: "age"
       description: "age of the user"

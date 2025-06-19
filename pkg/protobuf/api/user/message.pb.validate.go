@@ -68,10 +68,10 @@ func (m *CreateUserRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetAge() > 150 {
+	if val := m.GetAge(); val < 1 || val > 150 {
 		err := CreateUserRequestValidationError{
 			field:  "Age",
-			reason: "value must be less than or equal to 150",
+			reason: "value must be inside range [1, 150]",
 		}
 		if !all {
 			return err
