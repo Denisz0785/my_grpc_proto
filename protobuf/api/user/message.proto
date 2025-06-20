@@ -37,7 +37,7 @@ message CreateUserRequest {
       description: "name of the user"
       required: "true"
       format: "string"
-      pattern: "^[a-zA-Z0-9]{1, 512}$"
+      pattern: "^[a-zA-Z0-9]{1,512}$"
       example: "\"Denis\""
     }
   ];
@@ -54,7 +54,7 @@ message CreateUserRequest {
       description: "age of the user"
       required: "false"
       format: "integer"
-      pattern: "^[0-9]$"
+      pattern: "^[0-9]{1,3}$"
       example: "123"
     }
   ];
@@ -84,7 +84,7 @@ message CreateUserResponse {
       description: "greeting of the user"
       required: "true"
       format: "string"
-      pattern: "^[a-zA-Z0-9]{1, 512}$"
+      pattern: "^[a-zA-Z0-9]{1,512}$"
       example: "\"User Denis created\""
     }
   ];

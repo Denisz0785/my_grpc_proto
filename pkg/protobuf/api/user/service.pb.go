@@ -26,12 +26,12 @@ var File_protobuf_api_user_service_proto protoreflect.FileDescriptor
 
 const file_protobuf_api_user_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1fprotobuf/api/user/service.proto\x12\bapi.user\x1a\x1fprotobuf/api/user/message.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto2\xec\x01\n" +
-	"\vUserService\x12\x7f\n" +
+	"\x1fprotobuf/api/user/service.proto\x12\bapi.user\x1a\x1fprotobuf/api/user/message.proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto2\xf1\x01\n" +
+	"\vUserService\x12\x83\x01\n" +
 	"\n" +
-	"CreateUser\x12\x1b.api.user.CreateUserRequest\x1a\x1c.api.user.CreateUserResponse\"6\x92A \n" +
+	"CreateUser\x12\x1b.api.user.CreateUserRequest\x1a\x1c.api.user.CreateUserResponse\":\x92A \n" +
 	"\x04user\x12\n" +
-	"CreateUser\x1a\fCreate new u\x82\xd3\xe4\x93\x02\r:\x01*\"\b/v1/user\x1a\\\x92AY\n" +
+	"CreateUser\x1a\fCreate new u\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/api/v1/user\x1a\\\x92AY\n" +
 	"\vUserService\x12)Наш крутой REST API сервис\x1a\x1f\n" +
 	"\x1dБольше примеровB\x91\x02\x92A\xf2\x01\x12\x83\x01\n" +
 	"\x0eLet's Go gRPC!\x12\rLearning gRPC\"\x16\n" +
