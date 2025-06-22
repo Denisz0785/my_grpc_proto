@@ -58,14 +58,12 @@ tasks:
 #  proto:lint:
 #    deps: [ install-buf, proto:install-plugins ]
 #    desc: Проверка .proto-файлов на соответствие стилю
-#    dir: proto
 #    cmds:
 #      - '{{.BUF}} lint'
 
 #  proto:update-deps:
 #    deps: [ install-buf ]
 #    desc: Обновляет зависимости protobuf из удаленных репозиториев (googleapis и т.д.)
-#    dir: proto
 #    cmds:
 #      - |
 #        echo "🔄 Обновляем зависимости buf..."
@@ -73,6 +71,6 @@ tasks:
 
   proto:gen:
     deps: [ install-buf, proto:install-plugins ]
-    desc: Генерация Go-кода из .proto
+    desc: Генерация Go-кода
     cmds:
       - '{{.BUF}} generate'
