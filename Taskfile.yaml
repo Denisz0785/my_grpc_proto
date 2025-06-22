@@ -1,9 +1,78 @@
-version: "3"
+version: '3'
+
+# Глобальные переменные проекта
+vars:
+  BUF_VERSION: 'v1.54.0'
+  PROTOC_GEN_GO_VERSION: 'v1.36.6'
+  PROTOC_GEN_GO_GRPC_VERSION: 'v1.5.1'
+  PROTOC_GEN_VALIDATE_VERSION: 'v1.2.1'
+  PROTOC_GEN_GRPC_GATEWAY_VERSION: 'v2.26.3'
+  PROTOC_GEN_OPENAPIV2_VERSION: 'v2.26.3'
+
+  BIN_DIR: '{{.ROOT_DIR}}/bin'
+  BUF: '{{.BIN_DIR}}/buf'
+  PROTOC_GEN_GO: '{{.BIN_DIR}}/protoc-gen-go'
+  PROTOC_GEN_GO_GRPC: '{{.BIN_DIR}}/protoc-gen-go-grpc'
+  PROTOC_GEN_VALIDATE: '{{.BIN_DIR}}/protoc-gen-validate'
+  PROTOC_GEN_GRPC_GATEWAY: '{{.BIN_DIR}}/protoc-gen-grpc-gateway'
+  PROTOC_GEN_OPENAPIV2: '{{.BIN_DIR}}/protoc-gen-openapiv2'
 
 tasks:
-  generate:
-    aliases: [gen]
-    desc: "Generate code using buf utilities"
+  install-buf:
+    desc: "Устанавливает Buf в каталог bin"
     cmds:
-      - mkdir -p gen/go
-      - buf generate
+      - |
+        mkdir -p {{.BIN_DIR}}
+        [ -f {{.BUF}} ] || {
+          echo '📦 Устанавливаем buf {{.BUF_VERSION}}...'
+          GOBIN={{.BIN_DIR}} go install github.com/bufbuild/buf/cmd/buf@{{.BUF_VERSION}}
+        }
+    status:
+      - test -x {{.BUF}}
+
+  proto:install-plugins:
+    desc: "Устанавливает protoc плагины в каталог bin"
+    cmds:
+      - |
+        [ -f {{.PROTOC_GEN_GO}} ] || {
+          echo '📦 Installing protoc-gen-go...'
+          GOBIN={{.BIN_DIR}} go install google.golang.org/protobuf/cmd/protoc-gen-go@{{.PROTOC_GEN_GO_VERSION}}
+        }
+        [ -f {{.PROTOC_GEN_GO_GRPC}} ] || {
+          echo '📦 Installing protoc-gen-go-grpc...'
+          GOBIN={{.BIN_DIR}} go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@{{.PROTOC_GEN_GO_GRPC_VERSION}}
+        }
+        [ -f {{.PROTOC_GEN_VALIDATE}} ] || {
+          echo '📦 Installing protoc-gen-validate...'
+          GOBIN={{.BIN_DIR}} go install github.com/envoyproxy/protoc-gen-validate@{{.PROTOC_GEN_VALIDATE_VERSION}}
+        }
+        [ -f {{.PROTOC_GEN_GRPC_GATEWAY}} ] || {
+          echo '📦 Installing protoc-gen-grpc-gateway...'
+          GOBIN={{.BIN_DIR}} go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@{{.PROTOC_GEN_GRPC_GATEWAY_VERSION}}
+        }
+        [ -f {{.PROTOC_GEN_OPENAPIV2}} ] || {
+          echo '📦 Installing protoc-gen-openapiv2...'
+          GOBIN={{.BIN_DIR}} go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@{{.PROTOC_GEN_OPENAPIV2_VERSION}}
+        }
+
+#  proto:lint:
+#    deps: [ install-buf, proto:install-plugins ]
+#    desc: Проверка .proto-файлов на соответствие стилю
+#    dir: proto
+#    cmds:
+#      - '{{.BUF}} lint'
+
+#  proto:update-deps:
+#    deps: [ install-buf ]
+#    desc: Обновляет зависимости protobuf из удаленных репозиториев (googleapis и т.д.)
+#    dir: proto
+#    cmds:
+#      - |
+#        echo "🔄 Обновляем зависимости buf..."
+#        {{.BUF}} dep update
+
+  proto:gen:
+    deps: [ install-buf, proto:install-plugins ]
+    desc: Генерация Go-кода из .proto
+    cmds:
+      - '{{.BUF}} generate'

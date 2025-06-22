@@ -1,27 +1,40 @@
+# Подробнее: https://buf.build/docs/configuration/v2/buf-gen-yaml
 version: v2
 managed:
   # 'enabled: true' turns managed mode on, 'enabled: false' ignores all managed mode options.
   enabled: true # default: false
+  disable:
+    # Don't modify any files in vendor.protobuf
+    - path: vendor.protobuf
 plugins:
+  # protoc-gen-go - генерация go типов для message и enum (https://github.com/protocolbuffers/protobuf-go)
   - local: protoc-gen-go
-    out: gen/go
-    opt: paths=source_relative
-  - local: protoc-gen-go-grpc
-    out: gen/go
-    opt: paths=source_relative
-  - local: protoc-gen-grpc-gateway
-    out: gen/go
+    out: pkg
     opt:
       - paths=source_relative
-      - generate_unbound_methods=true
-      - standalone=false
-      - logtostderr=true
-  - local: protoc-gen-openapiv2
-    out: swagger
-    strategy: all
+  # protoc-gen-go-grpc - генерация grpc сервиса и клиента (https://github.com/grpc/grpc-go)
+  - local: protoc-gen-go-grpc
+    out: pkg
     opt:
-      - generate_unbound_methods=true
-      - logtostderr=true
-      - allow_merge=true
-      - merge_file_name=swagger
+      - paths=source_relative
 
+  - local: protoc-gen-validate
+    out: pkg
+    opt:
+      - paths=source_relative # Генерирует выходные файлы относительно входных proto-файлов, сохраняя структуру директорий
+      - lang=go
+
+  - local: protoc-gen-grpc-gateway
+    out: pkg
+    opt:
+      - paths=source_relative # Генерирует выходные файлы относительно входных proto-файлов, сохраняя структуру директорий
+
+  - local: protoc-gen-openapiv2
+    out: api
+    opt:
+      - allow_merge=true # Объединяет все Swagger определения в один файл вместо создания отдельного файла для каждого .proto
+      - merge_file_name=service.json # Задает имя объединенного файла Swagger (по умолчанию apidocs.swagger.json)
+      - json_names_for_fields=false # Отключает использование имен полей из JSON тегов, использует имена полей из proto
+    strategy: all
+inputs:
+  - directory: protobuf # путь до наших protobuf файлов

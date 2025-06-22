@@ -1,0 +1,64 @@
+version: '3'
+
+vars:
+  local_bin: '{{ .ROOT_DIR }}/bin'
+  proto_src: '{{ .ROOT_DIR }}/protobuf/api'
+  proto_out: '{{ .ROOT_DIR }}/pkg'
+  vendor_proto: '{{ .ROOT_DIR }}/vendor.protobuf'
+
+tasks:
+  bin-deps:
+    desc: "Installing binary dependencies..."
+    cmds:
+      - echo "Installing binary dependencies..."
+      - >
+        GOBIN={{.local_bin}} go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+      - >
+        GOBIN={{.local_bin}} go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+      - >
+        GOBIN={{.local_bin}} go install github.com/envoyproxy/protoc-gen-validate@latest
+    env:
+      PATH: "{{.PATH}}:{{.local_bin}}"
+
+  protoc-generate:
+    desc: "Generate .go files from protobuf..."
+    cmds:
+      - mkdir -p {{.proto_out}}
+      - >
+        PATH="{{.PATH}}:{{.local_bin}}" protoc
+        -I={{.ROOT_DIR}} 
+        -I={{.vendor_proto}} 
+        -I={{.vendor_proto}}/envoyproxy-validate
+        --proto_path={{.proto_out}}
+        --go_out={{.proto_out}} --go_opt paths=source_relative
+        --go-grpc_out={{.proto_out}} --go-grpc_opt paths=source_relative
+        --grpc-gateway_out={{.proto_out}} --grpc-gateway_opt paths=source_relative
+        --validate_out=lang=go,paths=source_relative:{{.proto_out}}
+        {{.proto_src}}/salary/messages.proto
+        {{.proto_src}}/salary/service.proto
+        {{.proto_src}}/user/message.proto
+        {{.proto_src}}/user/service.proto
+        {{.proto_src}}/vacation/messages.proto
+        {{.proto_src}}/vacation/service.proto
+        {{.proto_src}}/salary/v2/messages.proto
+        {{.proto_src}}/salary/v2/service.proto
+
+  generate:
+    desc: "Install binaries and generate protobuf go files"
+    deps:
+      - bin-deps
+      - protoc-generate
+
+  swagger-generate:
+    desc: "Generate OpenAPIv2 swagger json..."
+    cmds:
+      - >
+        PATH="{{.PATH}}:{{.local_bin}}" protoc
+        -I={{.ROOT_DIR}} -I={{.vendor_proto}}  -I={{.vendor_proto}}/envoyproxy-validate
+        --openapiv2_out=. --openapiv2_opt logtostderr=true
+        {{.proto_src}}/user/service.proto
+
+  swagger:
+    desc: "Generate swagger"
+    deps:
+      - swagger-generate

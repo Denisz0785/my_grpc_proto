@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.vacation;
 
-import "protobuf/api/vacation/messages.proto";
+import "api/vacation/messages.proto";
 
 option go_package = "my_grpc/pkg/api/vacation;vacation";
 

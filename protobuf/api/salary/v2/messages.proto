@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.salary.v2;
 
-import "protobuf/api/salary/messages.proto";
+import "api/salary/messages.proto";
 
 option go_package = "my_grpc/pkg/protobuf/api/salary/v2;salary_v2";
 
